@@ -51,13 +51,13 @@ def load_and_predict_models(start_date, end_date):
 
 
     model_directories = [
-        ("Hatton", "E:/myProjects/weather/Hatton/"),
-        ("Kandy", "E:/myProjects/weather/kandy/"),
-        ("Jaffna", "E:/myProjects/weather/Jaffna/"),
-        ("Badulla", "E:/myProjects/weather/Badulla/")
+        ("Hatton", "models/Weather Prediction/Hatton/"),
+        ("Kandy", "models/Weather Prediction/kandy/"),
+        ("Jaffna", "models/Weather Prediction/Jaffna/"),
+        ("Badulla", "models/Weather Prediction/Badulla/")
     ]
 
-    rf_model_path = "E:/myProjects/weather/final/rf.pkl"
+    rf_model_path = "models/Weather Prediction/rf.pkl"
 
     weather_predictions = {}
 
@@ -66,10 +66,3 @@ def load_and_predict_models(start_date, end_date):
         weather_predictions[folder_name] = y_pred
 
     return weather_predictions
-
-
-start_date = '2023-10-01'
-end_date = '2024-10-01'
-
-predictions = load_and_predict_models(start_date, end_date)
-print(predictions)

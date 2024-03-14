@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import numpy
 import util_price_pred
+import util_weather_pred 
 
 
 app = Flask(__name__)
@@ -94,6 +95,30 @@ def predict_potato_price():
     response.headers.add("Access-Control-Allow-Origin", "*")
 
     return response
+
+
+@app.route("/predict_weather", methods=["GET"])
+def predict_weather():
+
+    start_date = request.args.get("start_date")
+    end_date = request.args.get("end_date")
+
+    if start_date is None or end_date is None:
+        return jsonify({"error": "Missing start_date or end_date parameter"}), 400
+
+    try:
+        predictions = util_weather_pred.load_and_predict_models(start_date, end_date)
+        
+        predictions_dict = {}
+        for location, values in predictions.items():
+            predictions_dict[location] = values.tolist()
+
+        response = jsonify(predictions_dict)
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == "__main__":
